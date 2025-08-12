@@ -147,7 +147,6 @@ const InputField = ({ label, value, onChangeText, placeholder, multiline = false
 
 function MorningScreen({ navigation }) {
   const [workout, setWorkout] = useState('');
-  const [scripture, setScripture] = useState('');
   const [scriptureNotes, setScriptureNotes] = useState('');
   const [goalsText, setGoalsText] = useState('');
   const [loading, setLoading] = useState(false);
@@ -164,10 +163,10 @@ function MorningScreen({ navigation }) {
         promises.push(LocalStorageService.saveWorkout(currentDate, workout));
       }
       
-      // Save scripture
-      if (scripture.trim()) {
-        promises.push(LocalStorageService.saveScripture(currentDate, scripture, scriptureNotes));
-      }
+             // Save scripture
+       if (scriptureNotes.trim()) {
+         promises.push(LocalStorageService.saveScripture(currentDate, '', scriptureNotes));
+       }
       
       // Save goals
       if (goalsText.trim()) {
@@ -188,7 +187,6 @@ function MorningScreen({ navigation }) {
       
       // Reset fields
       setWorkout('');
-      setScripture('');
       setScriptureNotes('');
       setGoalsText('');
     } catch (err) {
@@ -218,22 +216,15 @@ function MorningScreen({ navigation }) {
           />
         </Card>
 
-        <Card style={styles.sectionCard}>
-          <InputField
-            label="📖 Scripture Study"
-            value={scripture}
-            onChangeText={setScripture}
-            placeholder="Scripture reference (e.g., John 3:16)"
-          />
-          <InputField
-            label="📝 Scripture Notes"
-            value={scriptureNotes}
-            onChangeText={setScriptureNotes}
-            placeholder="Your insights and reflections"
-            multiline
-            style={styles.notesInput}
-          />
-        </Card>
+                 <Card style={styles.sectionCard}>
+           <InputField
+             label="📝 Scripture Notes"
+             value={scriptureNotes}
+             onChangeText={setScriptureNotes}
+             placeholder="Your insights and reflections from scripture study"
+             multiline
+           />
+         </Card>
 
         <Card style={styles.sectionCard}>
           <InputField
@@ -442,7 +433,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     paddingHorizontal: 20,
-    paddingTop: Platform.OS === 'ios' ? 50 : 30,
+    paddingTop: Platform.OS === 'ios' ? 60 : 50,
     paddingBottom: 30,
   },
   header: {
